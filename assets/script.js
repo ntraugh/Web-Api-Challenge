@@ -6,6 +6,7 @@ var quizEl = document.querySelector("#quiz");
 var endEl = document.querySelector("#end");
 var startButton = document.querySelector("#start button");
 var myTitle = document.querySelector("#quiz #title");
+var timeEl = document.querySelector("#time")
 
 
 // creating an array for the questions and using our numbers questions and answers
@@ -74,27 +75,30 @@ function init() {
     displayState();
 };
 
+var secondsLeft = 20
 
-function countdown(){
-    var secondsLeft = 20;
-    setInterval(function(){
-        secondsLeft --;
-        if (counter >= 0){
-            var time = document.querySelector("count");
-            time.innerHTML = secondsLeft;
-        }
-        if (count === 0){
-            alert("You ran out of time.");
-            clearInterval(secondsLeft);
-        }
-    }, 1000);
+function displayTime() {
+    timeEl.textContent = secondsLeft + " seconds left."; 
 }
 
 // button for begin quiz.  If it's clicked we change our state to 'quiz' to begin the quiz then run our display state function.
 startButton.addEventListener("click", function () {
     state = "quiz";
-    countdown();
     displayState();
+    displayTime();
+    var timerInterval = setInterval(function(){
+        secondsLeft --;
+        displayTime();
+
+        if(secondsLeft === 0){
+            alert("Time is up.")
+            clearInterval(timerInterval);
+        }
+
+
+    }, 1000)
+    
+
 });
 
 // 
