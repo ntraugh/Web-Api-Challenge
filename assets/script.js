@@ -7,6 +7,8 @@ var endEl = document.querySelector("#end");
 var startButton = document.querySelector("#start button");
 var myTitle = document.querySelector("#quiz #title");
 
+
+// creating an array for the questions and using our numbers questions and answers
 var questions = [
     {
         num: 1,
@@ -42,6 +44,8 @@ var questions = [
     }
 ]
 
+console.log(questions[0, 1])
+
 
 // function to display which state of the quiz you are on. Will always start on 'start'
 function displayState() {
@@ -70,12 +74,26 @@ function init() {
     displayState();
 };
 
-var secondsLeft = 20;
 
+function countdown(){
+    var secondsLeft = 20;
+    setInterval(function(){
+        secondsLeft --;
+        if (counter >= 0){
+            var time = document.querySelector("count");
+            time.innerHTML = secondsLeft;
+        }
+        if (count === 0){
+            alert("You ran out of time.");
+            clearInterval(secondsLeft);
+        }
+    }, 1000);
+}
 
 // button for begin quiz.  If it's clicked we change our state to 'quiz' to begin the quiz then run our display state function.
 startButton.addEventListener("click", function () {
     state = "quiz";
+    countdown();
     displayState();
 });
 
