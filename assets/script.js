@@ -10,6 +10,7 @@ var timeEl = document.querySelector("#time")
 var contentEl = document.querySelector("#content")
 var choicesEl = document.querySelector("#choices")
 var choiceButton = document.querySelector(".solid")
+var formEl = document.querySelector("#myForm")
 
 var currentQuestion = 0;
 var correctAnswers = 0;
@@ -52,7 +53,7 @@ var questions = [
     }
 ]
 
-console.log(questions[0].question) // to get the name of the question, options, and answer
+ // to get the name of the question, options, and answer
 
 
 // function to display which state of the quiz you are on. Will always start on 'start'
@@ -96,25 +97,40 @@ function clickButton(){
     displayQuestion();
     choicesEl.innerHTML = ""; // clears out the choices to allow for new ones to populate
     displayOptions();
+
 }
 
-// selecting content for our id
+
+
+// displaying the question on the page function
 function displayQuestion() {
-    var eachQuestion = questions[currentQuestion].question
-    contentEl.textContent = eachQuestion
+    if(currentQuestion < 3){
+        var eachQuestion = questions[currentQuestion].question
+        contentEl.textContent = eachQuestion
 
+    } else{
+        state = "end"
+        displayState();
+    }
 }
+   
+
 
 function displayOptions() {
+    if(currentQuestion < 3){
     var eachOption = questions[currentQuestion].options
+   
     for (var i = 0; i < eachOption.length; i++) {
         var doc = document.createElement("button")
         doc.setAttribute("class", "solid")
         doc.onclick = clickButton;
         doc.textContent = eachOption[i]
         choicesEl.appendChild(doc)
+    }}else{    // turned this into an if else statement to account for current questions and the state we're in
+        state = "end"
+        displayState();
     }
-
+    
 }
 
 // button for begin quiz.  If it's clicked we change our state to 'quiz' to begin the quiz then run our display state function.
@@ -129,10 +145,14 @@ startButton.addEventListener("click", function () {
         displayTime();
 
         if (secondsLeft === 0) {
-            alert("Time is up.")
+            state = "end"
+            displayState();
+            alert("Time ran out, enter your name.")
             clearInterval(timerInterval);
         }
-
+        else if(state === "end"){ // if they finish the quiz before time is up it takes them to the ending page for entering their name
+            clearInterval(timerInterval);
+        }
 
     }, 1000)
 
