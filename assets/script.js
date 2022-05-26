@@ -7,6 +7,10 @@ var endEl = document.querySelector("#end");
 var startButton = document.querySelector("#start button");
 var myTitle = document.querySelector("#quiz #title");
 var timeEl = document.querySelector("#time")
+var contentEl = document.querySelector("#content")
+
+var currentQuestion = 0
+
 
 
 // creating an array for the questions and using our numbers questions and answers
@@ -77,8 +81,15 @@ function init() {
 
 var secondsLeft = 20
 
-function displayTime() {
+// function to display time left on the screen
+function displayTime() { 
     timeEl.textContent = secondsLeft + " seconds left."; 
+}
+
+// selecting content for our id
+function displayQuestion(index) {
+    var eachQuestion = questions[currentQuestion].question
+    contentEl.textContent = questions[currentQuestion].question 
 }
 
 // button for begin quiz.  If it's clicked we change our state to 'quiz' to begin the quiz then run our display state function.
@@ -97,11 +108,12 @@ startButton.addEventListener("click", function () {
 
 
     }, 1000)
+    displayQuestion();
     
 
 });
 
-// 
+
 myTitle.addEventListener("click", function () {
     state = "end";
     displayState();
