@@ -8,15 +8,19 @@ var startButton = document.querySelector("#start button");
 var myTitle = document.querySelector("#quiz #title");
 var timeEl = document.querySelector("#time")
 var contentEl = document.querySelector("#content")
+var choicesEl = document.querySelector("#choices")
+var choiceButton = document.querySelector(".solid")
 
-var currentQuestion = 0
+var currentQuestion = 0;
+var correctAnswers = 0;
+var quizDone = false;
+
 
 
 
 // creating an array for the questions and using our numbers questions and answers
 var questions = [
     {
-        num: 1,
         question: "What is javascript?",
         answer: "A scripting language",
         options: [
@@ -27,7 +31,6 @@ var questions = [
         ]
     },
     {
-        num: 2,
         question: "What does a javascript file end in?",
         answer: ".js",
         options: [
@@ -37,7 +40,7 @@ var questions = [
             ".jt"
         ]
     },
-    {   num: 3,
+    {
         question: "What does API stand for?",
         answer: "Application Programming Interface",
         options: [
@@ -45,11 +48,11 @@ var questions = [
             "Application Performance Indicator",
             "Application Programming Interface",
             "Application Pre Internet",
-        ]   
+        ]
     }
 ]
 
-console.log(questions[0, 1])
+console.log(questions[0].question) // to get the name of the question, options, and answer
 
 
 // function to display which state of the quiz you are on. Will always start on 'start'
@@ -82,14 +85,36 @@ function init() {
 var secondsLeft = 20
 
 // function to display time left on the screen
-function displayTime() { 
-    timeEl.textContent = secondsLeft + " seconds left."; 
+function displayTime() {
+    timeEl.textContent = secondsLeft + " seconds left.";
+}
+
+// function to click on an answer and move to the next one
+function clickButton(){
+    currentQuestion++;
+    console.log(currentQuestion)
+    displayQuestion();
+    choicesEl.innerHTML = ""; // clears out the choices to allow for new ones to populate
+    displayOptions();
 }
 
 // selecting content for our id
-function displayQuestion(index) {
+function displayQuestion() {
     var eachQuestion = questions[currentQuestion].question
-    contentEl.textContent = questions[currentQuestion].question 
+    contentEl.textContent = eachQuestion
+
+}
+
+function displayOptions() {
+    var eachOption = questions[currentQuestion].options
+    for (var i = 0; i < eachOption.length; i++) {
+        var doc = document.createElement("button")
+        doc.setAttribute("class", "solid")
+        doc.onclick = clickButton;
+        doc.textContent = eachOption[i]
+        choicesEl.appendChild(doc)
+    }
+
 }
 
 // button for begin quiz.  If it's clicked we change our state to 'quiz' to begin the quiz then run our display state function.
@@ -97,19 +122,21 @@ startButton.addEventListener("click", function () {
     state = "quiz";
     displayState();
     displayTime();
-    var timerInterval = setInterval(function(){
-        secondsLeft --;
+    displayQuestion();
+    displayOptions();
+    var timerInterval = setInterval(function () {
+        secondsLeft--;
         displayTime();
 
-        if(secondsLeft === 0){
+        if (secondsLeft === 0) {
             alert("Time is up.")
             clearInterval(timerInterval);
         }
 
 
     }, 1000)
-    displayQuestion();
-    
+
+
 
 });
 
