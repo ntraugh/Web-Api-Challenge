@@ -15,6 +15,7 @@ var formEl = document.querySelector("#myForm")
 var currentQuestion = 0;
 var correctAnswers = 0;
 
+
 startEl.style.textAlign = "center"; 
 quizEl.style.textAlign = "center"; 
 endEl.style.textAlign = "center"; 
