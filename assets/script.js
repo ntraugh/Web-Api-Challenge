@@ -20,6 +20,7 @@ quizEl.style.textAlign = "center";
 endEl.style.textAlign = "center"; 
 wholeThing.style.fontFamily = "sans-serif"
 wholeThing.style.backgroundColor = "#777777"
+wholeThing.style.marginTop = "200px"
 
 
 
@@ -139,6 +140,7 @@ function displayOptions() {
             doc.onclick = clickButton;
             doc.textContent = eachOption[i]
             choicesEl.appendChild(doc)
+            
         }
         } else {    // turned this into an if else statement to account for current questions and the state we're in
         state = "end"
