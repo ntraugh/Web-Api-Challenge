@@ -14,7 +14,10 @@ var formEl = document.querySelector("#myForm")
 
 var currentQuestion = 0;
 var correctAnswers = 0;
-var quizDone = false;
+
+startEl.style.textAlign = "center"; 
+quizEl.style.textAlign = "center"; 
+endEl.style.textAlign = "center"; 
 
 
 
@@ -23,7 +26,7 @@ var quizDone = false;
 var questions = [
     {
         question: "What is javascript?",
-        answer: "A scripting language",
+        answer: 0,
         options: [
             "A scripting language",
             "A spoken language",
@@ -33,7 +36,7 @@ var questions = [
     },
     {
         question: "What does a javascript file end in?",
-        answer: ".js",
+        answer: 1,
         options: [
             ".jk",
             ".js",
@@ -43,7 +46,7 @@ var questions = [
     },
     {
         question: "What does API stand for?",
-        answer: "Application Programming Interface",
+        answer: 2,
         options: [
             "Application Process Intervew",
             "Application Performance Indicator",
@@ -53,7 +56,7 @@ var questions = [
     }
 ]
 
- // to get the name of the question, options, and answer
+
 
 
 // function to display which state of the quiz you are on. Will always start on 'start'
@@ -91,9 +94,10 @@ function displayTime() {
 }
 
 // function to click on an answer and move to the next one
-function clickButton(){
+function clickButton() {
     currentQuestion++;
     console.log(currentQuestion)
+    console.log(correctAnswers)
     displayQuestion();
     choicesEl.innerHTML = ""; // clears out the choices to allow for new ones to populate
     displayOptions();
@@ -104,29 +108,29 @@ function clickButton(){
 
 // displaying the question on the page function
 function displayQuestion() {
-    if(currentQuestion < 3){
+    if (currentQuestion < 3) {
         var eachQuestion = questions[currentQuestion].question
         contentEl.textContent = eachQuestion
 
-    } else{
+    } else { // when the current question is 3 or more we will display the end state since there are no more questions
         state = "end"
         displayState();
     }
 }
-   
+
 
 
 function displayOptions() {
-    if(currentQuestion < 3){
-    var eachOption = questions[currentQuestion].options
-   
-    for (var i = 0; i < eachOption.length; i++) {
-        var doc = document.createElement("button")
-        doc.setAttribute("class", "solid")
-        doc.onclick = clickButton;
-        doc.textContent = eachOption[i]
-        choicesEl.appendChild(doc)
-    }}else{    // turned this into an if else statement to account for current questions and the state we're in
+    if (currentQuestion < 3) {
+        var eachOption = questions[currentQuestion].options
+        for (var i = 0; i < eachOption.length; i++) {
+            var doc = document.createElement("button")
+            doc.setAttribute("class", "solid")
+            doc.onclick = clickButton;
+            doc.textContent = eachOption[i]
+            choicesEl.appendChild(doc)
+        }
+        } else {    // turned this into an if else statement to account for current questions and the state we're in
         state = "end"
         displayState();
     }
@@ -150,7 +154,7 @@ startButton.addEventListener("click", function () {
             alert("Time ran out, enter your name.")
             clearInterval(timerInterval);
         }
-        else if(state === "end"){ // if they finish the quiz before time is up it takes them to the ending page for entering their name
+        else if (state === "end") { // if they finish the quiz before time is up it takes them to the ending page for entering their name
             clearInterval(timerInterval);
         }
 
