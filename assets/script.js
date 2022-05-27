@@ -1,6 +1,6 @@
 var state = "start";
 
-
+var wholeThing = document.querySelector("body")
 var startEl = document.querySelector("#start");
 var quizEl = document.querySelector("#quiz");
 var endEl = document.querySelector("#end");
@@ -18,7 +18,8 @@ var correctAnswers = 0;
 startEl.style.textAlign = "center"; 
 quizEl.style.textAlign = "center"; 
 endEl.style.textAlign = "center"; 
-
+wholeThing.style.fontFamily = "sans-serif"
+wholeThing.style.backgroundColor = "#777777"
 
 
 
@@ -95,6 +96,7 @@ function displayTime() {
 
 // function to click on an answer and move to the next one
 function clickButton() {
+    answerCheck();
     currentQuestion++;
     console.log(currentQuestion)
     console.log(correctAnswers)
@@ -102,6 +104,15 @@ function clickButton() {
     choicesEl.innerHTML = ""; // clears out the choices to allow for new ones to populate
     displayOptions();
 
+}
+
+function answerCheck(){
+    var newQuestion = questions[currentQuestion];
+    if(newQuestion === questions.answer){
+        correctAnswers++;
+    }
+    
+    
 }
 
 
@@ -118,8 +129,7 @@ function displayQuestion() {
     }
 }
 
-
-
+    // displaying each option(answer) with a for loop
 function displayOptions() {
     if (currentQuestion < 3) {
         var eachOption = questions[currentQuestion].options
